@@ -19,7 +19,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Location",
-    value: "Jamdani Bisic, Rupganj, Narayanganj",
+    value: "Rupganj, Narayanganj",
     href: null,
   },
 ];

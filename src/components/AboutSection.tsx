@@ -1,9 +1,18 @@
 import { Calendar, MapPin, Globe } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
+const getAge = () => {
+  const birth = new Date(2003, 7, 4); // August 4, 2003
+  const today = new Date();
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return `${age} years old`;
+};
+
 const personalInfo = [
-  { icon: Calendar, label: "Birthday", value: "04 August, 2003" },
-  { icon: MapPin, label: "Location", value: "Narayanganj, Bangladesh" },
+  { icon: Calendar, label: "Age", value: getAge() },
+  { icon: MapPin, label: "Location", value: "Rupganj, Narayanganj" },
   { icon: Globe, label: "Languages", value: "Bengali, English" },
 ];
 
