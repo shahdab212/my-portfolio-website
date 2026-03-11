@@ -1,0 +1,109 @@
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
+
+interface ContactEmailRequest {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+const handler = async (req: Request): Promise<Response> => {
+  // Handle CORS preflight requests
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { name, email, subject, message }: ContactEmailRequest = await req.json();
+
+    console.log("Received contact form submission:", { name, email, subject });
+
+    // Send confirmation email to the sender (this is the main email)
+    const confirmationRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "Rayhan Rathi <onboarding@resend.dev>",
+        to: [email],
+        subject: "Thank you for your message!",
+        html: `
+          <h1>Thank you for reaching out, ${name}!</h1>
+          <p>I have received your message and will get back to you as soon as possible.</p>
+          <p>Here's a copy of your message:</p>
+          <hr />
+          <p><strong>Subject:</strong> ${subject}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+          <hr />
+          <p>Best regards,<br>Rayhan Rathi</p>
+        `,
+      }),
+    });
+
+    const confirmationData = await confirmationRes.json();
+    console.log("Confirmation email response:", confirmationData);
+
+    if (!confirmationRes.ok) {
+      console.error("Failed to send confirmation email:", confirmationData);
+      throw new Error(confirmationData.message || "Failed to send confirmation email");
+    }
+
+    // Send notification email to rathirayhan888@gmail.com (your Resend account email)
+    try {
+      const notificationRes = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+          from: "Contact Form <onboarding@resend.dev>",
+          to: ["rathirayhan888@gmail.com"],
+          subject: `New Contact: ${subject}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>From:</strong> ${name} (${email})</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <hr />
+            <p><strong>Message:</strong></p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
+          `,
+        }),
+      });
+      const notificationData = await notificationRes.json();
+      console.log("Notification email response:", notificationData);
+    } catch (notifError) {
+      console.log("Notification email failed:", notifError);
+    }
+
+    return new Response(
+      JSON.stringify({ success: true }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
+  } catch (error: any) {
+    console.error("Error in send-contact-email function:", error);
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
+  }
+};
+
+serve(handler);
