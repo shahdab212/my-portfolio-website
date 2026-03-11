@@ -1,6 +1,5 @@
 import { Facebook, Send, BookOpen, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import profileImage from "@/assets/profile.jpg";
 
 const socialLinks = [
   {
@@ -33,14 +32,10 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 py-20">
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
           
-          {/* Profile Image */}
+          {/* Profile Avatar */}
           <div className="relative mb-10 animate-fade-up">
-            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-2 ring-border shadow-elevated">
-              <img
-                src={profileImage}
-                alt="Abu Rayhan Rathi"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full bg-secondary border-2 border-border shadow-elevated flex items-center justify-center">
+              <span className="font-heading text-4xl md:text-5xl text-primary select-none">AR</span>
             </div>
           </div>
 
