@@ -34,8 +34,12 @@ const HeroSection = () => {
           
           {/* Profile Avatar */}
           <div className="relative mb-10 animate-fade-up">
-            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full bg-secondary border-2 border-border shadow-elevated flex items-center justify-center">
-              <span className="font-heading text-4xl md:text-5xl text-primary select-none">AR</span>
+            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full bg-secondary border-2 border-border shadow-elevated overflow-hidden">
+              <img
+                src="/profile.png"
+                alt="Abu Rayhan Rathi"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
