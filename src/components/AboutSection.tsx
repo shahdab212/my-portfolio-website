@@ -12,7 +12,7 @@ const getAge = () => {
 
 const personalInfo = [
   { icon: Calendar, label: "Age", value: getAge() },
-  { icon: MapPin, label: "Location", value: "Rupganj, Narayanganj" },
+  { icon: MapPin, label: "Location", value: "Narayanganj, Bangladesh" },
   { icon: Globe, label: "Languages", value: "Bengali, English" },
 ];
 
