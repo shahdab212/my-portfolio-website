@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,6 +21,12 @@ const contactInfo = [
     label: "Location",
     value: "Rupganj, Narayanganj",
     href: null,
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "linkedin.com/in/rathirayhan",
+    href: "https://www.linkedin.com/in/rathirayhan",
   },
 ];
 

@@ -1,4 +1,4 @@
-import { Facebook, Send, BookOpen, ArrowDown } from "lucide-react";
+import { Facebook, Send, BookOpen, ArrowDown, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -17,6 +17,11 @@ const socialLinks = [
     href: "https://www.goodreads.com/rathirayhan",
     icon: BookOpen,
     label: "Goodreads",
+  },
+  {
+    href: "https://www.linkedin.com/in/rathirayhan",
+    icon: Linkedin,
+    label: "LinkedIn",
   },
 ];
 
