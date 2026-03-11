@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
-// Set to true when deploying to Fly.io or your own server
-const USE_SELF_HOSTED_API = false;
+// Replace this with the access key you get from https://web3forms.com
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
 
 const contactInfo = [
   {
@@ -23,7 +22,6 @@ const contactInfo = [
     href: null,
   },
 ];
-
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -48,28 +46,28 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      if (USE_SELF_HOSTED_API) {
-        // Use self-hosted API (Fly.io, VPS, etc.)
-        const response = await fetch('/api/send-contact-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error);
-      } else {
-        // Use Lovable Cloud (Supabase Edge Function)
-        const { error } = await supabase.functions.invoke('send-contact-email', {
-          body: formData,
-        });
-        if (error) throw error;
-      }
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: formData.subject,
+          from_name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
 
-      toast.success("Message sent successfully! Check your email for confirmation.");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Message sent! I'll get back to you soon.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        throw new Error(data.message || "Failed to send message.");
+      }
     } catch (error: any) {
-      console.error("Error sending message:", error);
-      toast.error(error.message || "Failed to send message. Please try again.");
+      toast.error(error.message || "Failed to send. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -95,7 +93,7 @@ const ContactSection = () => {
               Let's Connect
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              Whether you need help with mathematics, want to discuss books, or just 
+              Whether you need help with mathematics, want to discuss books, or just
               wish to say hello — feel free to reach out.
             </p>
 
@@ -126,7 +124,6 @@ const ContactSection = () => {
                 </div>
               ))}
             </div>
-
           </div>
 
           {/* Contact Form */}
