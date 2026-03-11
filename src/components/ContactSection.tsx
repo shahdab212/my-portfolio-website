@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-// Replace this with the access key you get from https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = "44c03f84-42c8-4ebc-88a9-eb1ea9483b75";
+// Web3Forms access key – stored in .env as VITE_WEB3FORMS_KEY
+const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 
 const contactInfo = [
   {
@@ -24,6 +25,8 @@ const contactInfo = [
 ];
 
 const ContactSection = () => {
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.1 });
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,21 +77,21 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32">
+    <section id="contact" ref={ref} className="py-24 md:py-32">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-accent text-sm tracking-[0.3em] uppercase font-medium mb-3 block animate-fade-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <span className="text-accent text-sm tracking-[0.3em] uppercase font-medium mb-3 block">
             Contact
           </span>
-          <h2 className="font-heading text-4xl md:text-5xl text-primary animate-fade-up animation-delay-100">
+          <h2 className="font-heading text-4xl md:text-5xl text-primary">
             Get in Touch
           </h2>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
           {/* Contact Info */}
-          <div className="animate-slide-in-left">
+          <div className={`transition-all duration-700 delay-150 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
             <h3 className="font-heading text-2xl text-primary mb-4">
               Let's Connect
             </h3>
@@ -127,7 +130,7 @@ const ContactSection = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="animate-slide-in-right">
+          <div className={`transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
             <div className="mb-6">
               <h3 className="font-heading text-2xl text-primary mb-2">
                 Just Say Hello!
@@ -197,7 +200,7 @@ const ContactSection = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 font-medium"
+                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-12 font-medium"
               >
                 {isSubmitting ? (
                   "Sending..."

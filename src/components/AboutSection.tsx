@@ -1,4 +1,5 @@
 import { Calendar, MapPin, Globe } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const personalInfo = [
   { icon: Calendar, label: "Birthday", value: "04 August, 2003" },
@@ -7,21 +8,25 @@ const personalInfo = [
 ];
 
 const AboutSection = () => {
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.15 });
+
   return (
-    <section id="about" className="py-24 md:py-32">
+    <section id="about" ref={ref} className="py-24 md:py-32">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-accent text-sm tracking-[0.3em] uppercase font-medium mb-3 block animate-fade-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <span className="text-accent text-sm tracking-[0.3em] uppercase font-medium mb-3 block">
             About
           </span>
-          <h2 className="font-heading text-4xl md:text-5xl text-primary animate-fade-up animation-delay-100">
+          <h2 className="font-heading text-4xl md:text-5xl text-primary">
             Get to Know Me
           </h2>
         </div>
 
         {/* Content */}
-        <div className="max-w-2xl mx-auto text-center animate-fade-up animation-delay-200">
+        <div
+          className={`max-w-2xl mx-auto text-center transition-all duration-700 delay-150 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           <h3 className="font-heading text-3xl md:text-4xl text-primary mb-2">
             Hi! I'm Abu Rayhan Rathi
           </h3>

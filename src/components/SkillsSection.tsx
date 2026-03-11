@@ -1,4 +1,5 @@
 import { Code, Terminal, Brain, Sparkles } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const skillCategories = [
   {
@@ -26,8 +27,10 @@ const skillCategories = [
 ];
 
 const SkillsSection = () => {
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.1 });
+
   return (
-    <section id="skills" className="py-24 md:py-32 bg-secondary/30 relative overflow-hidden">
+    <section id="skills" ref={ref} className="py-24 md:py-32 bg-secondary/30 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
@@ -36,28 +39,28 @@ const SkillsSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 mb-3 animate-fade-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className="inline-flex items-center gap-2 mb-3">
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-accent text-sm tracking-[0.3em] uppercase font-medium">
               Skills
             </span>
             <Sparkles className="w-4 h-4 text-accent" />
           </div>
-          <h2 className="font-heading text-4xl md:text-5xl text-primary animate-fade-up animation-delay-100">
+          <h2 className="font-heading text-4xl md:text-5xl text-primary">
             My Arsenal
           </h2>
-          <p className="text-muted-foreground mt-4 max-w-md mx-auto animate-fade-up animation-delay-200">
+          <p className="text-muted-foreground mt-4 max-w-md mx-auto">
             Tools and technologies I work with
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {skillCategories.map((category, index) => (
             <div
               key={category.title}
-              className="group relative animate-fade-up"
-              style={{ animationDelay: `${(index + 1) * 100}ms` }}
+              className={`group relative transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              style={{ transitionDelay: `${(index + 2) * 100}ms` }}
             >
               {/* Gradient background on hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${category.color} rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
