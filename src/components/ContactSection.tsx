@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
 // Replace this with the access key you get from https://web3forms.com
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+const WEB3FORMS_ACCESS_KEY = "44c03f84-42c8-4ebc-88a9-eb1ea9483b75";
 
 const contactInfo = [
   {
