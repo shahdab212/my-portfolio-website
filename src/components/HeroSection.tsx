@@ -53,11 +53,7 @@ const HeroSection = () => {
           }}
         />
 
-        {/* Corner accent lines */}
-        <div className="absolute top-12 left-12 w-16 h-16 border-t border-l border-accent/20 rounded-tl-lg" />
-        <div className="absolute top-12 right-12 w-16 h-16 border-t border-r border-accent/20 rounded-tr-lg" />
-        <div className="absolute bottom-20 left-12 w-16 h-16 border-b border-l border-accent/20 rounded-bl-lg" />
-        <div className="absolute bottom-20 right-12 w-16 h-16 border-b border-r border-accent/20 rounded-br-lg" />
+
       </div>
 
       <div className="container mx-auto px-6 py-20" ref={ref}>
