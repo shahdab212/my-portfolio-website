@@ -4,6 +4,11 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const socialLinks = [
   {
+    href: "https://www.linkedin.com/in/rathirayhan",
+    icon: Linkedin,
+    label: "LinkedIn",
+  },
+  {
     href: "https://facebook.com/rathi021",
     icon: Facebook,
     label: "Facebook",
@@ -17,11 +22,6 @@ const socialLinks = [
     href: "https://www.goodreads.com/rathirayhan",
     icon: BookOpen,
     label: "Goodreads",
-  },
-  {
-    href: "https://www.linkedin.com/in/rathirayhan",
-    icon: Linkedin,
-    label: "LinkedIn",
   },
 ];
 
