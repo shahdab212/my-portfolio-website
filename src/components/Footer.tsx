@@ -1,4 +1,4 @@
-import { Facebook, Send, BookOpen } from "lucide-react";
+import { Facebook, Send, BookOpen, Linkedin } from "lucide-react";
 
 const socialLinks = [
   {
