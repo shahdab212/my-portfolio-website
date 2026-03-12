@@ -22,12 +22,6 @@ const contactInfo = [
     value: "Rupganj, Narayanganj",
     href: null,
   },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    value: "linkedin.com/in/rathirayhan",
-    href: "https://www.linkedin.com/in/rathirayhan",
-  },
 ];
 
 const ContactSection = () => {
