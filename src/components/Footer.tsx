@@ -2,6 +2,11 @@ import { Facebook, Send, BookOpen } from "lucide-react";
 
 const socialLinks = [
   {
+    href: "https://www.linkedin.com/in/rathirayhan",
+    icon: Linkedin,
+    label: "LinkedIn",
+  },
+  {
     href: "https://facebook.com/rathi021",
     icon: Facebook,
     label: "Facebook",
