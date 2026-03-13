@@ -7,24 +7,35 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copy source and build frontend
+# Copy source and build
 COPY . .
+
+# Build-time args for Vite (VITE_ vars are baked into the bundle at build time)
+ARG VITE_WEB3FORMS_KEY
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_PUBLISHABLE_KEY
+ENV VITE_WEB3FORMS_KEY=$VITE_WEB3FORMS_KEY
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_PUBLISHABLE_KEY=$VITE_SUPABASE_PUBLISHABLE_KEY
+
 RUN npm run build
 
-# Production stage
-FROM node:20-alpine
+# Production stage - nginx to serve static files
+FROM nginx:alpine
 
-WORKDIR /app
+# Copy built files to nginx's default serve directory
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy server files
-COPY server/package*.json ./
-RUN npm ci --production
+# nginx config for client-side routing (React Router support)
+RUN echo 'server { \
+  listen 8080; \
+  root /usr/share/nginx/html; \
+  index index.html; \
+  location / { \
+    try_files $uri $uri/ /index.html; \
+  } \
+}' > /etc/nginx/conf.d/default.conf
 
-COPY server/index.js ./
+EXPOSE 8080
 
-# Copy built frontend to public folder
-COPY --from=builder /app/dist ./public
-
-EXPOSE 3000
-
-CMD ["node", "index.js"]
+CMD ["nginx", "-g", "daemon off;"]

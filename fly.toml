@@ -1,22 +1,28 @@
-# Fly.io configuration
-# Deploy with: fly launch && fly deploy
+# fly.toml app configuration file generated for rathirayhan on 2026-03-12T13:06:07+06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "rayhan-portfolio"
-primary_region = "sin"  # Singapore - change to nearest region
+app = 'rathirayhan'
+primary_region = 'sin'
 
 [build]
+  [build.args]
+    VITE_WEB3FORMS_KEY = "44c03f84-42c8-4ebc-88a9-eb1ea9483b75"
+    VITE_SUPABASE_URL = "https://yydcuqowrixiqltdyyyg.supabase.co"
+    VITE_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5ZGN1cW93cml4aXFsdGR5eXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MTIzNzQsImV4cCI6MjA4MzE4ODM3NH0.h-MSQ-W6wcPH4p0yacejvCn-Me77mQC44dLxZT4U6mw"
+
+[env]
+  NODE_ENV = 'production'
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
 
-[env]
-  NODE_ENV = "production"
-
 [[vm]]
-  memory = "256mb"
-  cpu_kind = "shared"
+  memory = '256mb'
   cpus = 1
+  memory_mb = 256

@@ -3,6 +3,12 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const experience = [
   {
+    period: "Jul 2025 — Present",
+    title: "ICT Teacher",
+    organization: "Aimers Classroom",
+    description: "Teaching Information and Communication Technology (ICT) to HSC-level students at Aimers Classroom.",
+  },
+  {
     period: "Aug 2023 — Dec 2024",
     title: "Assistant Teacher (Mathematics)",
     organization: "Ruhunnajat Ideal Madrasha, Narayanganj",
@@ -12,14 +18,21 @@ const experience = [
 
 const education = [
   {
+    period: "2025",
+    title: "CS50's Introduction to Programming with Python",
+    institution: "Harvard University / edX",
+    description: "Completed CS50P — an introduction to programming using Python, covering functions, libraries, unit tests, file I/O, and more.",
+    link: "https://cs50.harvard.edu/certificates/5a77fbb5-9b21-4768-833d-414e8225e7e2",
+  },
+  {
     period: "2023 — Present",
-    title: "Pursuing Honors in Mathematics",
+    title: "Pursuing Honors in Mathematics (BSc)",
     institution: "Govt. Shahid Suhrawardy College, Dhaka",
     description: "Pursuing an undergraduate degree in Mathematics.",
   },
   {
     period: "2021 — 2022",
-    title: "Higher Secondary Certificate",
+    title: "Higher Secondary Certificate (HSC)",
     institution: "Dr. Mahbubur Rahman Mollah College, Dhaka",
     description: "Completed HSC with concentration in science and mathematics.",
   },
@@ -31,9 +44,10 @@ interface TimelineItemProps {
   subtitle: string;
   description: string;
   isLast?: boolean;
+  link?: string;
 }
 
-const TimelineItem = ({ period, title, subtitle, description, isLast }: TimelineItemProps) => (
+const TimelineItem = ({ period, title, subtitle, description, isLast, link }: TimelineItemProps) => (
   <div className="relative pl-8 pb-8">
     {/* Vertical line */}
     {!isLast && (
@@ -41,7 +55,7 @@ const TimelineItem = ({ period, title, subtitle, description, isLast }: Timeline
     )}
     {/* Dot */}
     <div className="absolute left-0 top-1 w-4 h-4 rounded-full border-2 border-accent bg-card" />
-    
+
     <div className="space-y-1">
       <span className="text-xs text-accent font-medium tracking-wide">
         {period}
@@ -49,6 +63,16 @@ const TimelineItem = ({ period, title, subtitle, description, isLast }: Timeline
       <h4 className="text-lg font-heading text-primary">{title}</h4>
       <p className="text-sm text-muted-foreground">{subtitle}</p>
       <p className="text-muted-foreground text-sm pt-1">{description}</p>
+      {link && (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs text-accent hover:underline pt-1 font-medium"
+        >
+          View Certificate →
+        </a>
+      )}
     </div>
   </div>
 );
@@ -78,7 +102,7 @@ const ResumeSection = () => {
               </div>
               <h3 className="font-heading text-xl text-primary">Education</h3>
             </div>
-            
+
             <div className="bg-card rounded-lg p-6 border border-border">
               {education.map((item, index) => (
                 <TimelineItem
@@ -88,6 +112,7 @@ const ResumeSection = () => {
                   subtitle={item.institution}
                   description={item.description}
                   isLast={index === education.length - 1}
+                  link={item.link}
                 />
               ))}
             </div>
@@ -101,7 +126,7 @@ const ResumeSection = () => {
               </div>
               <h3 className="font-heading text-xl text-primary">Experience</h3>
             </div>
-            
+
             <div className="bg-card rounded-lg p-6 border border-border">
               {experience.map((item, index) => (
                 <TimelineItem
